@@ -1,0 +1,17 @@
+{
+  "name": "permit-and-licensing",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start:all": "concurrently -n BP,BP2,FR,BR,EP,AG,FE -c blue,green,magenta,yellow,cyan,red,white \"node business-permit/index.js\" \"node building-permit/index.js\" \"node franchise-permit/index.js\" \"node barangay-permit/index.js\" \"node e-permit-tracker/index.js\" \"node api-gateway/index.js\" \"cd frontend && npm run dev\"",
+    "dev": "node api-gateway/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "http-proxy-middleware": "^2.0.6"
+  }
+}
