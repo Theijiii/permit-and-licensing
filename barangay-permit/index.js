@@ -1,23 +1,65 @@
-import { useEffect, useState } from "react";
+import express from 'express';
+import cors from 'cors';
+import mysql from 'mysql2/promise';
+import { dbConfig } from './config.js'; // make sure you have your DB config
 
-export default function BarangayPermit() {
-  const [clearances, setClearances] = useState([]);
+// Create Express app
+const app = express();
 
-  useEffect(() => {
-    fetch("http://localhost:5000/barangay-permit/barangay-clearance")
-      .then(res => res.json())
-      .then(setClearances)
-      .catch(err => console.error("Barangay Permit Service error:", err));
-  }, []);
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-  return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Barangay Clearances</h1>
-      <ul className="list-disc pl-5">
-        {clearances.map(c => (
-          <li key={c.id}>{c.name} - {c.status}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+// Routes
+app.post('/user/barangaypermitsubmit-application', async (req, res) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    // Your existing code logic here
+    res.json({ success: true, message: 'Submission endpoint works' });
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    res.status(500).json({ error: 'Failed to submit application' });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+app.post('/user/submit-application', async (req, res) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const { 
+      applicant_name,
+      address,
+      contact_number,
+      business_name,
+      business_type,
+      purpose
+    } = req.body;
+
+    const [result] = await connection.execute(
+      `INSERT INTO barangay_permits 
+       (applicant_name, address, contact_number, business_name, business_type, purpose, status, application_date) 
+       VALUES (?, ?, ?, ?, ?, ?, 'Pending', NOW())`,
+      [applicant_name, address, contact_number, business_name, business_type, purpose]
+    );
+
+    res.json({ 
+      success: true, 
+      message: 'Application submitted successfully',
+      applicationId: result.insertId 
+    });
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    res.status(500).json({ error: 'Failed to submit application' });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Start server
+const PORT = 3004;
+app.listen(PORT, () => {
+  console.log(`Barangay Permit Service running on port ${PORT}`);
+});

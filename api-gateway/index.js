@@ -6,38 +6,75 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Forward requests to each microservice
-app.use("/businesspermit", createProxyMiddleware({
+// -------------------- BUSINESS PERMIT --------------------
+app.use("/admin/businesspermit", createProxyMiddleware({
   target: "http://localhost:3001",
   changeOrigin: true,
-  pathRewrite: { '^/businesspermit': '' } // removes the prefix
+  pathRewrite: { "^/admin/businesspermit": "" }
 }));
 
-app.use("/buildingpermit", createProxyMiddleware({
+app.use("/user/businesspermit", createProxyMiddleware({
+  target: "http://localhost:3001",
+  changeOrigin: true,
+  pathRewrite: { "^/user/businesspermit": "/user" }
+}));
+
+// -------------------- BUILDING PERMIT --------------------
+app.use("/admin/buildingpermit", createProxyMiddleware({
   target: "http://localhost:3002",
   changeOrigin: true,
-  pathRewrite: { '^/buildingpermit': '' }
+  pathRewrite: { "^/admin/buildingpermit": "/admin" }
 }));
 
-app.use("/franchisepermit", createProxyMiddleware({
+app.use("/user/buildingpermit", createProxyMiddleware({
+  target: "http://localhost:3002",
+  changeOrigin: true,
+  pathRewrite: { "^/user/buildingpermit": "/user"}
+}));
+
+app.use("/admin/franchisepermit", createProxyMiddleware({
   target: "http://localhost:3003",
   changeOrigin: true,
-  pathRewrite: { '^/franchisepermit': '' }
+  pathRewrite: { "^/admin/franchisepermit": "/admin" }
 }));
 
-app.use("/barangaypermit", createProxyMiddleware({
+app.use("/user/franchisepermit", createProxyMiddleware({
+  target: "http://localhost:3003",
+  changeOrigin: true,
+  pathRewrite: { "^/user/franchisepermit": "/user"}
+}));
+
+
+app.use("/admin/barangaypermit", createProxyMiddleware({
   target: "http://localhost:3004",
   changeOrigin: true,
-  pathRewrite: { '^/barangaypermit': '' }
+  pathRewrite: { "^/admin/barangaypermit": "/admin" }
 }));
 
-app.use("/permit-tracker", createProxyMiddleware({   // fixed to match frontend
+
+
+app.use("/user/barangaypermit", createProxyMiddleware({
+  target: "http://localhost:3004",
+  changeOrigin: true,
+  pathRewrite: { "^/user/barangaypermit": "/user" }
+}));
+
+
+app.use("/admin/permittracker", createProxyMiddleware({
   target: "http://localhost:3005",
   changeOrigin: true,
-  pathRewrite: { '^/permit-tracker': '' }
+  pathRewrite: { "^/admin/permittracker": "/admin" }
 }));
 
+app.use("/user/permittracker", createProxyMiddleware({
+  target: "http://localhost:3005",
+  changeOrigin: true,
+  pathRewrite: { "^/user/permittracker": "/user" }
+}));
+
+
+// -------------------- START API GATEWAY --------------------
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`API Gateway running on port ${PORT}`);
+  console.log(` API Gateway running on port ${PORT}`);
 });
