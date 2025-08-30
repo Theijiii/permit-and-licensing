@@ -1,0 +1,37 @@
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "5000:5000"
+
+  barangay-permit:
+    build: ./barangay-permit
+    ports:
+      - "3001:3001"
+
+  building-permit:
+    build: ./building-permit
+    ports:
+      - "3002:3002"
+
+  business-permit:
+    build: ./business-permit
+    ports:
+      - "3003:3003"
+
+  franchise-permit:
+    build: ./franchise-permit
+    ports:
+      - "3004:3004"
+
+  e-permit-tracker:
+    build: ./e-permit-tracker
+    ports:
+      - "3005:3005"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-gateway

@@ -1,32 +1,64 @@
-import express from "express";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
+import mysql from 'mysql2/promise';
+import { dbConfig } from './config.js'; // make sure you have your DB config
 
+// Create Express app
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Mock data
-const barangayPermit = [
-  { id: 1, applicant: "Juan Dela Cruz", purpose: "Business registration", status: "Approved" },
-  { id: 2, applicant: "Maria Santos", purpose: "Job requirement", status: "Pending" },
-];
-
-app.use("/barangay-permit", (req, res) => {
-  res.json(barangayPermit);
+// Routes
+app.post('/user/barangaypermitsubmit-application', async (req, res) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    // Your existing code logic here
+    res.json({ success: true, message: 'Submission endpoint works' });
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    res.status(500).json({ error: 'Failed to submit application' });
+  } finally {
+    if (connection) await connection.end();
+  }
 });
 
-app.use("/barangay-permit:id", (req, res) => {
-  const permit = barangayPermit.find(p => p.id == req.params.id);
-  if (!permit) return res.status(404).json({ message: "Not found" });
-  res.json(permit);
+app.post('/user/submit-application', async (req, res) => {
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const { 
+      applicant_name,
+      address,
+      contact_number,
+      business_name,
+      business_type,
+      purpose
+    } = req.body;
+
+    const [result] = await connection.execute(
+      `INSERT INTO barangay_permits 
+       (applicant_name, address, contact_number, business_name, business_type, purpose, status, application_date) 
+       VALUES (?, ?, ?, ?, ?, ?, 'Pending', NOW())`,
+      [applicant_name, address, contact_number, business_name, business_type, purpose]
+    );
+
+    res.json({ 
+      success: true, 
+      message: 'Application submitted successfully',
+      applicationId: result.insertId 
+    });
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    res.status(500).json({ error: 'Failed to submit application' });
+  } finally {
+    if (connection) await connection.end();
+  }
 });
 
-app.post("/apply", (req, res) => {
-  const newPermit = { id: barangayPermit.length + 1, ...req.body, status: "Pending" };
-  barangayPermit.push(newPermit);
-  res.status(201).json(newPermit);
-});
-
+// Start server
 const PORT = 3004;
 app.listen(PORT, () => {
   console.log(`Barangay Permit Service running on port ${PORT}`);
