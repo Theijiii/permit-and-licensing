@@ -10,7 +10,7 @@ app.use(express.json());
 app.use("/businesspermit", createProxyMiddleware({
   target: "http://localhost:3001",
   changeOrigin: true,
-  pathRewrite: { '^/businesspermit': '' } // removes the prefix
+  pathRewrite: { '^/businesspermit': '' }
 }));
 
 app.use("/buildingpermit", createProxyMiddleware({
@@ -31,10 +31,10 @@ app.use("/barangaypermit", createProxyMiddleware({
   pathRewrite: { '^/barangaypermit': '' }
 }));
 
-app.use("/permit-tracker", createProxyMiddleware({   // fixed to match frontend
+app.use("/permittracker", createProxyMiddleware({
   target: "http://localhost:3005",
   changeOrigin: true,
-  pathRewrite: { '^/permit-tracker': '' }
+  pathRewrite: { '^/permittracker': '' }
 }));
 
 const PORT = 5000;

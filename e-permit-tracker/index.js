@@ -1,23 +1,20 @@
-import { useEffect, useState } from "react";
+import express from "express";
+import cors from "cors";
 
-export default function PermitTracker() {
-  const [tracking, setTracking] = useState([]);
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-  useEffect(() => {
-    fetch("http://localhost:5000/e-permit-tracker/track")
-      .then(res => res.json())
-      .then(setTracking)
-      .catch(err => console.error("E-Permit Tracker Service error:", err));
-  }, []);
+const tracking = [
+  { id: 1, permitType: "Business", status: "Approved" },
+  { id: 2, permitType: "Building", status: "Pending" },
+];
 
-  return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">E-Permit Tracker</h1>
-      <ul className="list-disc pl-5">
-        {tracking.map(t => (
-          <li key={t.id}>{t.permitType} - {t.status}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+app.get("/track", (req, res) => {
+  res.json(tracking);
+});
+
+const PORT = 3005;
+app.listen(PORT, () => {
+  console.log(`E-Permit Tracker Service running on port ${PORT}`);
+});

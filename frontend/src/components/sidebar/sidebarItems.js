@@ -1,4 +1,4 @@
-import { LayoutDashboard, Settings, Users, FileText } from 'lucide-react'
+import { LayoutDashboard, Settings } from 'lucide-react'
 
 const sidebarItems = [
   {
@@ -13,30 +13,30 @@ const sidebarItems = [
     icon: LayoutDashboard,
     path:"/businesspermit"
   },
-{
-  id: "BuildingPermit",
-  label: "Building and Construction Permit",
-  path: "/buildingpermit"
-},
-
-{
+  {
+    id: "BuildingPermit",
+    label: "Building and Construction Permit",
+    icon: LayoutDashboard,
+    path: "/buildingpermit"
+  },
+  {
     id: "FranchisePermit",
     label: "Franchise and Transport Permit",
     icon: LayoutDashboard,
     path: "/franchisepermit"
-},
-{
+  },
+  {
     id: "BarangayPermit",
     label: "Barangay Permit",
     icon: LayoutDashboard,
     path: "/barangaypermit"
-},
-{
+  },
+  {
     id: "PermitTracker",
     label: "Permit Tracker",
     icon: LayoutDashboard,
     path: "/permittracker"
-},
+  },
   {
     id: "settings",
     label: "Settings",

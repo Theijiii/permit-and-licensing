@@ -1,23 +1,20 @@
-import { useEffect, useState } from "react";
+import express from "express";
+import cors from "cors";
 
-export default function FranchisePermit() {
-  const [franchises, setFranchises] = useState([]);
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-  useEffect(() => {
-    fetch("http://localhost:5000/franchise-permit/franchises")
-      .then(res => res.json())
-      .then(setFranchises)
-      .catch(err => console.error("Franchise Permit Service error:", err));
-  }, []);
+const franchises = [
+  { id: 1, operator: "Alpha Transport", status: "Active" },
+  { id: 2, operator: "Bravo Lines", status: "Pending" },
+];
 
-  return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Franchise Permits</h1>
-      <ul className="list-disc pl-5">
-        {franchises.map(f => (
-          <li key={f.id}>{f.operator} - {f.status}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+app.get("/franchises", (req, res) => {
+  res.json(franchises);
+});
+
+const PORT = 3003;
+app.listen(PORT, () => {
+  console.log(`Franchise Permit Service running on port ${PORT}`);
+});

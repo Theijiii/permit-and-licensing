@@ -6,7 +6,7 @@ export default function BuildingPermit() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/building") // API Gateway route
+    fetch("/api/buildingpermit/building")
       .then((res) => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();

@@ -4,7 +4,6 @@ import Sidebar from './components/sidebar/sidebar'
 import Header from './components/header/Header'
 import sidebarItems from './components/sidebar/sidebarItems'
 
-// Main pages
 import Dashboard from './pages/Dashboard'
 import Module2 from './pages/Module2'
 
