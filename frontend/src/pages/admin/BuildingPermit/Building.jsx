@@ -1,6 +1,7 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 
-export default function BuildingPermit() {
+export default function BuildingApplication() {
   const [building, setBuilding] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -56,6 +57,12 @@ export default function BuildingPermit() {
           </tbody>
         </table>
       )}
+=======
+export default function Building() {
+  return (
+    <div>
+      <h1>Building permit APPLICATION</h1>
+>>>>>>> restore-dashboard
     </div>
   );
 }
