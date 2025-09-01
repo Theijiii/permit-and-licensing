@@ -9,27 +9,92 @@ const AdminSidebarItems = [
   },
   {
     id: "BusinessPermit",
-    label: "Business Permit Application",
+    label: "Business Application",
     icon: Briefcase,
-    path:"/admin/businesspermit"
+    subItems: [
+      {
+
+        id: "BusAppDash",
+        label: "Dashboard",
+        path: "/admin/businessdashboard"
+      },
+      {
+        
+        id: "BusinessPermit",
+        label: "Permit Application",
+        path: "/admin/businesspermit"
+        
+      },
+      {
+        id: "BusinessProcess",
+        label: "Permit Processing",
+        path: "/admin/businessprocessing"
+      }
+    ]
   },
   {
     id: "BuildingPermit",
-    label: "Building and Construction Permit",
+    label: "Building Application",
     icon: Building2,
-    path: "/admin/buildingpermit"
+    subItems: [
+      {
+
+        id: "BuildingDashboard",
+        label: "Dashboard",
+        path: "/admin/buildingdashboard"
+      },
+      {
+
+        id: "BuildingPermit",
+        label: "Permit Application",
+        path: "/admin/buildingpermit"
+
+      },
+      {
+        id: "BuildingProcess",
+        label: "Permit Processing",
+        path: "/admin/buildingprocessing"
+      }
+    ]
   },
+
   {
     id: "FranchisePermit",
-    label: "Franchise and Transport Permit",
+    label: "Franchise Application",
     icon: Bus,
-    path: "/admin/franchisepermit"
+    path: "/admin/franchisepermit",
+    subItems: [
+      {
+
+        id: "FranchiseDashboard",
+        label: "Dashboard",
+        path: "/admin/franchisedashboard"
+      },
+      {
+
+        id: "FranchisePermit",
+        label: "Permit Application",
+        path: "/admin/franchisepermit"
+
+      },
+    ],
   },
   {
     id: "BarangayPermit",
     label: "Barangay Permit",
     icon: Home,
-    path: "/admin/barangaypermit"
+    subItems: [
+      {
+        id: "BarangayPermit",
+        label: "Permit Application",
+        path: "/admin/barangaypermit"
+      },
+      {
+        id: "RequestClearance",
+        label: "Request Clearance",
+        path: "/admin/requestclearance"
+      }
+    ]
   },
   {
     id: "PermitTracker",
@@ -37,23 +102,6 @@ const AdminSidebarItems = [
     icon: Search,
     path: "/admin/permittracker"
   },
-  {
-    id: "settings",
-    label: "Settings",
-    icon: Settings,
-    subItems: [
-      {
-        id: "AdminGeneralSettings",
-        label: "General",
-        path: "/admin/general"
-      },
-      {
-        id: "AdminSecuritySettings",
-        label: "Security",
-        path: "/admin/security"
-      }
-    ]
-  }
 ]
 
 export default AdminSidebarItems

@@ -12,7 +12,7 @@ export default function FranchisePermit() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-4">Franchise Permits</h1>
+      <h1 className="text-xl font-bold mb-4">Franchise Permits shahdgaghsfgh</h1>
       <ul className="list-disc pl-5">
         {franchises.map(f => (
           <li key={f.id}>{f.operator} - {f.status}</li>
